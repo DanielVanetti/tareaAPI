@@ -2,17 +2,15 @@ services:
   mysql_db:
     container_name: my_mysql_db
     image: mysql:latest
-    # Important command to allow legacy authentications for old versions
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: eventosdb
-    expose:
-      - "3306"
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    # expose:
+    #   - "3306"
     ports:
-      - "3306:3306"
+      - "${PORT}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
