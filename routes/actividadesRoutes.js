@@ -1,14 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const itemsController = require('../controllers/actividadesController');
+const actividadesController = require('../controllers/actividadesController');
 
-// Define la ruta GET para obtener items
-router.get('/actividades', actividadesController.getItems);
+// Registrar una actividad
+router.post('/', actividadesController.registrarActividad);
 
-// Define la ruta POST para crear un nuevo item
-router.post('/actoividades', actividadesController.createItem);
-
-router.get('/actividadeserror', actividadesController.getItemsError);
-
+// Consultar una actividad por código
+router.get('/:codigo', actividadesController.consultarActividad);
 
 module.exports = router;
