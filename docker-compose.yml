@@ -13,6 +13,7 @@ services:
       - "${PORT}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./db/actividades_table.sql:/docker-entrypoint-initdb.d/actividades_table.sql
 
 volumes:
   mysql_data:
