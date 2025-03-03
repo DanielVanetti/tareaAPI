@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const { Sequelize } = require('sequelize');
+const sequelize= require('./db/database');
 
 // Cargar las variables de entorno
 dotenv.config();
@@ -9,21 +9,25 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Conectar a la base de datos con Sequelize
-const sequelize = new Sequelize(
-  `mysql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:3307/${process.env.DB_NAME}`
-);
 
-// Verificar la conexión con la base de datos
-sequelize.authenticate()
-  .then(() => console.log('Conectado a la base de datos MySQL'))
-  .catch(err => console.log('No se pudo conectar a la base de datos:', err));
 
 // Rutas
-app.use('/api/cliente', require('./routes/clientesRoutes'));
+app.use('/api/clientes', require('./routes/clienteRoutes'));
 app.use('/api/actividades', require('./routes/actividadesRoutes'));
 
-// Iniciar el servidor
-app.listen(process.env.PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
+// Middleware para manejo centralizado de errores
+app.use((err, req, res, next) => {
+  console.error('Error inesperado:', err);
+  res.status(500).json({ message: 'Ocurrió un error en el servidor (Middleware)' });
 });
+// // Iniciar el servidor
+// app.listen(process.env.PORT, () => {
+//   console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
+// });
+
+sequelize.sync()
+    .then(() => {
+        console.log('Base de datos sincronizada');
+        app.listen(process.env.PORT || 3000, () => console.log(`Servidor en puerto ${process.env.PORT || 3000}`));
+    })
+    .catch(err => console.log('Error al sincronizar la BD:', err));

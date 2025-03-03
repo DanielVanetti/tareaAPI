@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS actividad (
   nombre varchar(50) NOT NULL,
   fecha date NOT NULL,
   descripcion text DEFAULT NULL,
+  cupo int(11) NOT NULL,
   cliente int(11) NOT NULL,
   FOREIGN KEY (cliente) REFERENCES cliente(id),
   PRIMARY KEY (id)
@@ -33,12 +34,12 @@ VALUES
   ('Lucía', 'Rodríguez', NULL, 'lucia.rodriguez@example.com'),
   ('Marta', 'Hernández', 'Pérez', 'marta.hernandez@example.com');
 
-INSERT INTO actividad (nombre, fecha, descripcion, cliente)
+INSERT INTO actividad (nombre, fecha, descripcion, cupo, cliente)
 VALUES
-  ('Concierto de Rock', '2025-03-15', 'Un concierto de rock en vivo.', 1), 
-  ('Conferencia de Tecnología', '2025-04-01', 'Conferencia sobre el futuro de la tecnología.', 2), 
-  ('Maratón Solidario', '2025-05-20', 'Un maratón para recaudar fondos para la caridad.', 1),
-  ('Exposición de Arte', '2025-06-10', 'Exposición de artistas locales.', 4),  
-  ('Feria Gastronómica', '2025-07-25', 'Feria de comida típica regional.', 2);  
+   ('Concierto de Rock', '2025-03-15', 'Un concierto de rock en vivo.', 500, 1), 
+  ('Conferencia de Tecnología', '2025-04-01', 'Conferencia sobre el futuro de la tecnología.', 200, 2), 
+  ('Maratón Solidario', '2025-05-20', 'Un maratón para recaudar fondos para la caridad.', 300, 1),
+  ('Exposición de Arte', '2025-06-10', 'Exposición de artistas locales.', 100, 4),  
+  ('Feria Gastronómica', '2025-07-25', 'Feria de comida típica regional.', 150, 2);   
 
 COMMIT;
