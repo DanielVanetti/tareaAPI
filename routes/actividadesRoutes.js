@@ -22,9 +22,9 @@ router.post('/',
       .notEmpty().withMessage('El cupo es obligatorio')
       .isInt().withMessage('El cupo debe ser un número entero'),
       
-    body('cliente')
+    body('clienteId')
       .notEmpty().withMessage('El cliente es obligatorio')
-      .isInt().withMessage('El cliente debe ser un número entero')
+      .isInt({ min: 1 }).withMessage('El cliente debe ser un número entero positivo')
     ],
     actividadesController.registrarActividad);
 

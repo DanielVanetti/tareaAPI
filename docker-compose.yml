@@ -7,10 +7,10 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
-    # expose:
-    #   - "3306"
+    expose:
+      - "${DB_PORT}"
     ports:
-      - "${PORT}:3306"
+      - "${DB_PORT}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./db/actividades_table.sql:/docker-entrypoint-initdb.d/actividades_table.sql

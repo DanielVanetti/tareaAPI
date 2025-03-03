@@ -9,8 +9,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-
-
 // Rutas
 app.use('/api/clientes', require('./routes/clienteRoutes'));
 app.use('/api/actividades', require('./routes/actividadesRoutes'));

@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS actividad (
   fecha date NOT NULL,
   descripcion text DEFAULT NULL,
   cupo int(11) NOT NULL,
-  cliente int(11) NOT NULL,
-  FOREIGN KEY (cliente) REFERENCES cliente(id),
+  clienteId int(11) NOT NULL,
+  FOREIGN KEY (clienteId) REFERENCES cliente(id),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -34,7 +34,7 @@ VALUES
   ('Lucía', 'Rodríguez', NULL, 'lucia.rodriguez@example.com'),
   ('Marta', 'Hernández', 'Pérez', 'marta.hernandez@example.com');
 
-INSERT INTO actividad (nombre, fecha, descripcion, cupo, cliente)
+INSERT INTO actividad (nombre, fecha, descripcion, cupo, clienteId)
 VALUES
    ('Concierto de Rock', '2025-03-15', 'Un concierto de rock en vivo.', 500, 1), 
   ('Conferencia de Tecnología', '2025-04-01', 'Conferencia sobre el futuro de la tecnología.', 200, 2), 

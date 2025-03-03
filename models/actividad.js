@@ -1,15 +1,19 @@
-const dataTypes=require('sequelize');
-const sequelize=require('../db/database');
-const cliente = require('./cliente');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../db/database');
+const Cliente = require('./cliente');
 
-const Actividad=sequelize.define('Actividad',{
-   id:{type: dataTypes.INTEGER, primaryKey:true, autoIncrement:true},
-   nombre:{type: dataTypes.STRING(50), allowNull:false},
-   fecha:{type: dataTypes.DATE, allowNull:false},
-   descripcion:{type: dataTypes.STRING(200), allowNull:true},
-   cupo:{type: dataTypes.INTEGER, allowNull:false},
-   cliente: {type: dataTypes.INTEGER, allowNull:false, references: {model: cliente, key: 'id'}},
-
+const Actividad = sequelize.define('Actividad', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  nombre: { type: DataTypes.STRING(50), allowNull: false },
+  fecha: { type: DataTypes.DATE, allowNull: false },
+  descripcion: { type: DataTypes.STRING(200), allowNull: true },
+  cupo: { type: DataTypes.INTEGER, allowNull: false },
+  clienteId: { type: DataTypes.INTEGER, allowNull: false }
+}, {
+  timestamps: false,
+  tableName: 'actividad'
 });
-Actividad.belongsTo(cliente, {foreignKey: 'cliente'});
-module.exports=Actividad;
+
+Actividad.belongsTo(Cliente, { as: 'cliente', foreignKey: 'clienteId' });
+
+module.exports = Actividad;
