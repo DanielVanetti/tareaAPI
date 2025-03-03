@@ -1,6 +1,6 @@
 Integrantes: 
-Josué Solórzano
-Daniel González
+-Josué Solórzano
+-Daniel González
 
 //Referencias: https://www.luisllamas.es/como-usar-sequalize-con-nodejs/
 //https://ed.team/blog/agiliza-tu-desarrollo-en-nodejs-con-el-orm-sequelize
