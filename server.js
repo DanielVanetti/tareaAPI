@@ -13,16 +13,13 @@ app.use(express.json());
 app.use('/api/clientes', require('./routes/clienteRoutes'));
 app.use('/api/actividades', require('./routes/actividadesRoutes'));
 
-// Middleware para manejo centralizado de errores
+// Middleware para manejo general de los errores
 app.use((err, req, res, next) => {
   console.error('Error inesperado:', err);
   res.status(500).json({ message: 'Ocurrió un error en el servidor (Middleware)' });
 });
-// // Iniciar el servidor
-// app.listen(process.env.PORT, () => {
-//   console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
-// });
 
+//Sincronizar la base de datos y levantar el servidor
 sequelize.sync()
     .then(() => {
         console.log('Base de datos sincronizada');

@@ -6,12 +6,16 @@ const actividadesController = require('../controllers/actividadesController');
 // Registrar una actividad
 router.post('/', 
     [
+    //Uso de express-validator para validar los campos
+
     body('nombre')
       .notEmpty().withMessage('El nombre es obligatorio')
+      .bail()
       .isLength({ max: 50 }).withMessage('El nombre no puede tener más de 50 carácteres'),
 
     body('fecha')
       .notEmpty().withMessage('La fecha es obligatoria')
+      .bail()
       .isDate().withMessage('La fecha debe ser válida (AAAA-MM-DD)'),
 
     body('descripcion')
@@ -20,10 +24,12 @@ router.post('/',
 
     body('cupo')
       .notEmpty().withMessage('El cupo es obligatorio')
+      .bail()
       .isInt().withMessage('El cupo debe ser un número entero'),
       
     body('clienteId')
       .notEmpty().withMessage('El cliente es obligatorio')
+      .bail()
       .isInt({ min: 1 }).withMessage('El cliente debe ser un número entero positivo')
     ],
     actividadesController.registrarActividad);

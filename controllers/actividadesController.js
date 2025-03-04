@@ -4,15 +4,19 @@ const validationErrors = require('./validationController');
 
 // Obtener actividad por código
 exports.consultarActividad = async (req, res) => {
-    validationErrors(req, res);
+    const validationResult = validationErrors(req, res);
+    if (validationResult) {
+        return;
+    }
     try {
         const codigo = req.params.codigo;
         const actividad = await Actividad.findOne({ where:{id: codigo},
+            //Traer el cliente asociado a la actividad
             include: [
                 {
                     model: Cliente,
-                    as: 'cliente', // Asegúrate de que el alias coincida con el definido en `Actividad.belongsTo(Cliente, { as: 'cliente', foreignKey: 'clienteId' })`
-                    attributes: ['id', 'nombre', 'apellido1', 'correo'] // Trae solo estos campos
+                    as: 'cliente',
+                    attributes: ['id', 'nombre', 'apellido1', 'correo']
                 }
             ]
          });
@@ -28,7 +32,10 @@ exports.consultarActividad = async (req, res) => {
 
 // Crear nueva actividad
 exports.registrarActividad = async (req, res) => {
-    validationErrors(req, res);
+    const validationResult = validationErrors(req, res);
+    if (validationResult) {
+        return;
+    }
     try {
         const nuevaActividad = await Actividad.create(req.body);
         res.status(201).json(nuevaActividad);
