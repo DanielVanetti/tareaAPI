@@ -17,11 +17,11 @@ exports.registrarCliente = async (req, res,next) => {
     }
 };
 
-exports.obtenerTodosLosClientes = async (req, res) => {
+exports.obtenerTodosLosClientes = async (req, res, next) => {
     try {
         const clientes = await Cliente.findAll();
         res.json(clientes);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener los clientes' });
+        next(error);
     }
 };

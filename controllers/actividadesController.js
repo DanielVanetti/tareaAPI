@@ -39,8 +39,6 @@ exports.registrarActividad = async (req, res, next) => {
     try {
         const { nombre, fecha, descripcion, cupo, clienteId } = req.body;
 
-        console.log('Datos recibidos:', req.body);
-
         // Verificar si el cliente ya está registrado en la actividad
         const actividadExistente = await Actividad.findOne({
             where: { nombre, fecha },
@@ -53,9 +51,7 @@ exports.registrarActividad = async (req, res, next) => {
             ]
         });
         
-        console.log('Actividad existente:', actividadExistente);
-        
-        if (!actividadExistente) {
+        if (actividadExistente) {
             return res.status(400).json({ error: 'El cliente ya está registrado en esta actividad' });
         }
         
@@ -67,11 +63,11 @@ exports.registrarActividad = async (req, res, next) => {
     }
 };
 
-exports.obtenerTodasLasActividades = async (req, res) => {
+exports.obtenerTodasLasActividades = async (req, res, next) => {
     try {
         const actividad = await Actividad.findAll();
         res.json(actividad);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener las actividades' });
+        next(error);
     }
 };
