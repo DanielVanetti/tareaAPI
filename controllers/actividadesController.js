@@ -3,7 +3,7 @@ const Cliente = require('../models/cliente');
 const validationErrors = require('./validationController');
 
 // Obtener actividad por código
-exports.consultarActividad = async (req, res) => {
+exports.consultarActividad = async (req, res,next) => {
     const validationResult = validationErrors(req, res);
     if (validationResult) {
         return;
@@ -31,7 +31,7 @@ exports.consultarActividad = async (req, res) => {
 };
 
 // Crear nueva actividad
-exports.registrarActividad = async (req, res) => {
+exports.registrarActividad = async (req, res,next) => {
     const validationResult = validationErrors(req, res);
     if (validationResult) {
         return;

@@ -5,7 +5,7 @@ const Cliente = require('./cliente');
 const Actividad = sequelize.define('Actividad', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   nombre: { type: DataTypes.STRING(50), allowNull: false },
-  fecha: { type: DataTypes.DATE, allowNull: false },
+  fecha: { type: DataTypes.DATEONLY, allowNull: false },
   descripcion: { type: DataTypes.STRING(200), allowNull: true },
   cupo: { type: DataTypes.INTEGER, allowNull: false },
   clienteId: { type: DataTypes.INTEGER, allowNull: false }
