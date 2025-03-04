@@ -36,4 +36,7 @@ router.post('/',
     ],
     clientesController.registrarCliente);
 
+// Obtener todos los clientes
+router.get('/', clientesController.obtenerTodosLosClientes);
+
 module.exports = router;

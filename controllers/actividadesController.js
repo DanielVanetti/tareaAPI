@@ -3,7 +3,7 @@ const Cliente = require('../models/cliente');
 const validationErrors = require('./validationController');
 
 // Obtener actividad por código
-exports.consultarActividad = async (req, res) => {
+exports.consultarActividad = async (req, res, next) => {
     const validationResult = validationErrors(req, res);
     if (validationResult) {
         return;
@@ -31,16 +31,47 @@ exports.consultarActividad = async (req, res) => {
 };
 
 // Crear nueva actividad
-exports.registrarActividad = async (req, res) => {
+exports.registrarActividad = async (req, res, next) => {
     const validationResult = validationErrors(req, res);
     if (validationResult) {
         return;
     }
     try {
+        const { nombre, fecha, descripcion, cupo, clienteId } = req.body;
+
+        console.log('Datos recibidos:', req.body);
+
+        // Verificar si el cliente ya está registrado en la actividad
+        const actividadExistente = await Actividad.findOne({
+            where: { nombre, fecha },
+            include: [
+                {
+                    model: Cliente,
+                    as: 'cliente',
+                    where: { id: clienteId }
+                }
+            ]
+        });
+        
+        console.log('Actividad existente:', actividadExistente);
+        
+        if (!actividadExistente) {
+            return res.status(400).json({ error: 'El cliente ya está registrado en esta actividad' });
+        }
+        
         const nuevaActividad = await Actividad.create(req.body);
         res.status(201).json(nuevaActividad);
     } catch (error) {
         //Manejo centralizado de errores
         next(error);
+    }
+};
+
+exports.obtenerTodasLasActividades = async (req, res) => {
+    try {
+        const actividad = await Actividad.findAll();
+        res.json(actividad);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener las actividades' });
     }
 };

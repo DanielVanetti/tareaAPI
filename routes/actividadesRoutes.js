@@ -7,7 +7,6 @@ const actividadesController = require('../controllers/actividadesController');
 router.post('/', 
     [
     //Uso de express-validator para validar los campos
-
     body('nombre')
       .notEmpty().withMessage('El nombre es obligatorio')
       .bail()
@@ -26,7 +25,7 @@ router.post('/',
       .notEmpty().withMessage('El cupo es obligatorio')
       .bail()
       .isInt().withMessage('El cupo debe ser un número entero'),
-      
+    
     body('clienteId')
       .notEmpty().withMessage('El cliente es obligatorio')
       .bail()
@@ -38,5 +37,8 @@ router.post('/',
 router.get('/:codigo', 
     [param('codigo').isInt().withMessage('El código de la actividad debe ser un número entero')],
     actividadesController.consultarActividad);
+
+// Obtener todas las actividades
+router.get('/', actividadesController.obtenerTodasLasActividades);
 
 module.exports = router;
