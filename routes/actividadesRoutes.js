@@ -2,6 +2,7 @@ const express = require('express');
 const { body, param } = require('express-validator');
 const router = express.Router();
 const actividadesController = require('../controllers/actividadesController');
+const Cliente = require('../models/cliente');
 
 // Registrar una actividad
 router.post('/', 
@@ -30,6 +31,13 @@ router.post('/',
       .notEmpty().withMessage('El cliente es obligatorio')
       .bail()
       .isInt({ min: 1 }).withMessage('El cliente debe ser un número entero positivo')
+      .bail()
+      .custom(async (value) => {
+        const clienteExistente = await Cliente.findByPk(value);
+        if (!clienteExistente) {
+            throw new Error('El clienteId proporcionado no existe');
+        }
+    }),
     ],
     actividadesController.registrarActividad);
 
